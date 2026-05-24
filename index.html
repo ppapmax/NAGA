@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NAGA</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:url("bg.jpg");
+background-size:cover;
+background-position:center;
+
+color:white;
+font-size:38px;
+text-align:center;
+
+}
+
+.box{
+padding:30px;
+background:rgba(0,0,0,.45);
+border-radius:20px;
+max-width:800px;
+}
+
+button{
+
+padding:15px 35px;
+font-size:20px;
+
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<button id="start">
+開始
+</button>
+
+<div id="content" class="hidden">
+
+<h1 id="msg"></h1>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+</div>
+
+</div>
+
+<script>
+
+const messages=[
+
+"第一句",
+
+"第二句",
+
+"第三句",
+
+"第四句",
+
+"第五句",
+
+"第六句",
+
+"第七句",
+
+"第八句",
+
+"第九句",
+
+"第十句"
+
+]
+
+document
+.getElementById("start")
+.onclick=()=>{
+
+document
+.getElementById("start")
+.style.display="none"
+
+document
+.getElementById("content")
+.classList
+.remove("hidden")
+
+document
+.getElementById("msg")
+.innerText=
+
+messages[
+Math.floor(
+Math.random()*10
+)
+]
+
+document
+.getElementById("music")
+.play()
+
+}
+
+</script>
+
+</body>
+
+</html>
