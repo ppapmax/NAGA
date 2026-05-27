@@ -41,7 +41,7 @@ overflow:hidden;
 
 background:black;
 
-font-family:"NAGAfont";
+font-family:"NAGAfont",serif;
 
 }
 
@@ -49,9 +49,7 @@ font-family:"NAGAfont";
 
 position:fixed;
 
-top:0;
-
-left:0;
+inset:0;
 
 width:100vw;
 
@@ -71,104 +69,137 @@ inset:0;
 
 background:
 
-rgba(0,0,0,.32);
+rgba(0,0,0,.38);
 
 z-index:-1;
 
 }
 
-.container{
+#start{
 
-width:100%;
+position:fixed;
 
-height:100%;
+left:50%;
 
-display:flex;
+top:50%;
 
-justify-content:center;
+transform:
 
-align-items:center;
-
-padding:8vw;
-
-}
-
-.card{
-
-width:100%;
-
-max-width:700px;
-
-min-height:45vh;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-flex-direction:column;
-
-text-align:center;
-
-padding:40px;
-
-}
-
-button{
+translate(-50%,-50%);
 
 padding:
-16px 44px;
+
+14px 44px;
+
+border:
+
+1px solid white;
 
 border-radius:999px;
 
-border:
-1px solid rgba(255,255,255,.85);
-
 background:
-rgba(255,255,255,.06);
+
+rgba(0,0,0,.18);
 
 backdrop-filter:
+
 blur(6px);
 
 color:white;
 
-font-size:22px;
+font-size:24px;
 
 font-family:"NAGAfont";
 
 letter-spacing:8px;
 
+z-index:10;
+
 }
 
-#msg{
+#evaText{
 
-width:100%;
+position:fixed;
 
-display:none;
+inset:0;
+
+width:100vw;
+
+height:100vh;
+
+overflow:hidden;
+
+pointer-events:none;
 
 color:white;
 
-font-family:"NAGAfont";
+}
+
+.line{
+
+position:absolute;
+
+white-space:nowrap;
+
+opacity:1;
+
+text-shadow:
+
+0 0 10px rgba(0,0,0,.9);
+
+}
+
+.big{
 
 font-size:
 
 clamp(
-38px,
-9vw,
-74px
+52px,
+14vw,
+110px
 );
 
-font-weight:600;
+font-weight:900;
 
-line-height:1.45;
+line-height:.95;
+
+letter-spacing:-5px;
+
+}
+
+.mid{
+
+font-size:
+
+clamp(
+28px,
+7vw,
+60px
+);
+
+font-weight:900;
+
+line-height:1.05;
+
+letter-spacing:-2px;
+
+}
+
+.small{
+
+font-size:
+
+clamp(
+14px,
+3.5vw,
+24px
+);
+
+font-weight:700;
+
+line-height:1.2;
 
 letter-spacing:-1px;
-
-text-shadow:
-0 0 12px rgba(255,255,255,.12);
-
-word-break:keep-all;
 
 }
 
@@ -176,7 +207,9 @@ word-break:keep-all;
 
 display:inline-block;
 
-animation:blink .8s infinite;
+animation:
+
+blink .8s infinite;
 
 }
 
@@ -217,25 +250,13 @@ type="video/mp4">
 
 <div class="overlay"></div>
 
-<div class="container">
-
-<div class="card">
-
-<button
-id="start">
+<button id="start">
 
 NAGA
 
 </button>
 
-<div
-id="msg">
-
-</div>
-
-</div>
-
-</div>
+<div id="evaText"></div>
 
 <audio
 id="music"
@@ -246,52 +267,92 @@ loop>
 
 <script>
 
-const messages=[
+const layouts=[
 
-"2026年的人類將記憶壓縮進銀色光碟之中，以為這樣就能對抗遺忘，卻忘了自己早已失去記憶的能力。",
+[
+{text:"2026年的人類將記憶壓縮進銀色光碟之中",x:"6%",y:"18%",class:"mid"},
+{text:"以為這樣就能對抗遺忘",x:"7%",y:"38%",class:"big"},
+{text:"卻忘了自己早已失去記憶的能力",x:"8%",y:"60%",class:"small"},
+{text:"ARCHIVE 2026",x:"7%",y:"8%",class:"small"}
+],
 
-"光碟反射著文明的光，人們凝視著那些旋轉的圓盤，像凝視著屬於未來的新神。",
+[
+{text:"光碟反射著文明的光",x:"7%",y:"20%",class:"big"},
+{text:"人們凝視著那些旋轉的圓盤",x:"7%",y:"42%",class:"mid"},
+{text:"像凝視著屬於未來的新神",x:"8%",y:"64%",class:"small"},
+{text:"NAGA SIGNAL",x:"7%",y:"8%",class:"small"}
+],
 
-"Naga盤旋於時間之上，而人類則將靈魂燒錄進一片片塑膠之中，試圖留下存在過的證明。",
+[
+{text:"Naga盤旋於時間之上",x:"7%",y:"18%",class:"big"},
+{text:"而人類則將靈魂燒錄進一片片塑膠之中",x:"7%",y:"42%",class:"small"},
+{text:"試圖留下存在過的證明",x:"8%",y:"64%",class:"mid"}
+],
 
-"那是一個將情感轉換成檔案格式的年代，愛、痛苦與記憶，全都能被複製與刪除。",
+[
+{text:"那是一個將情感轉換成檔案格式的年代",x:"7%",y:"20%",class:"small"},
+{text:"愛、痛苦與記憶",x:"8%",y:"42%",class:"big"},
+{text:"全都能被複製與刪除",x:"8%",y:"64%",class:"mid"}
+],
 
-"2026年的人們相信，只要資料還能讀取，就代表文明從未真正死亡。",
+[
+{text:"2026年的人們相信",x:"7%",y:"20%",class:"big"},
+{text:"只要資料還能讀取",x:"8%",y:"42%",class:"mid"},
+{text:"就代表文明從未真正死亡",x:"8%",y:"64%",class:"small"}
+],
 
-"他們將未來刻錄進光碟表面，卻沒發現那些刮痕，早已像預言般記錄著文明的崩壞。",
+[
+{text:"他們將未來刻錄進光碟表面",x:"7%",y:"20%",class:"mid"},
+{text:"卻沒發現那些刮痕",x:"8%",y:"42%",class:"big"},
+{text:"早已像預言般記錄著文明的崩壞",x:"8%",y:"64%",class:"small"}
+],
 
-"光碟不斷旋轉，如同Naga象徵的輪迴，而人類也在科技之中反覆重演相同的慾望。",
+[
+{text:"光碟不斷旋轉",x:"7%",y:"20%",class:"big"},
+{text:"如同Naga象徵的輪迴",x:"8%",y:"42%",class:"mid"},
+{text:"而人類也在科技之中反覆重演相同的慾望",x:"8%",y:"64%",class:"small"}
+],
 
-"人們曾經害怕光碟損壞、資料消失，後來才明白，最先損壞的是人類自身的感知。",
+[
+{text:"人們曾經害怕光碟損壞",x:"7%",y:"18%",class:"big"},
+{text:"資料消失",x:"8%",y:"42%",class:"big"},
+{text:"後來才明白，最先損壞的是人類自身的感知",x:"8%",y:"66%",class:"small"}
+],
 
-"2783年的我們考古2026年的遺物時發現，他們留下最多的不是思想，而是無數無法讀取的檔案。",
+[
+{text:"2783年的我們考古2026年的遺物時發現",x:"7%",y:"20%",class:"small"},
+{text:"他們留下最多的不是思想",x:"8%",y:"42%",class:"mid"},
+{text:"而是無數無法讀取的檔案",x:"8%",y:"64%",class:"big"}
+],
 
-"當最後一片光碟停止轉動後，人類終於聽見了——那些被科技噪音掩蓋已久的自己。"
+[
+{text:"當最後一片光碟停止轉動後",x:"7%",y:"20%",class:"mid"},
+{text:"人類終於聽見了",x:"8%",y:"42%",class:"big"},
+{text:"那些被科技噪音掩蓋已久的自己",x:"8%",y:"64%",class:"small"}
+]
 
 ]
 
 const start=
 document.getElementById("start")
 
-const msg=
-document.getElementById("msg")
+const evaText=
+document.getElementById("evaText")
 
 const music=
 document.getElementById("music")
 
-function typeWriter(text){
-
-msg.innerHTML=""
-
-msg.style.display="block"
+function typeLine(element,text,speed=55){
 
 let i=0
 
-const speed=90
+element.innerHTML=""
 
-const typing=setInterval(()=>{
+const timer=
 
-msg.innerHTML=
+setInterval(()=>{
+
+element.innerHTML=
 
 text.substring(0,i)
 
@@ -303,9 +364,9 @@ i++
 
 if(i>text.length){
 
-clearInterval(typing)
+clearInterval(timer)
 
-msg.innerHTML=text
+element.innerHTML=text
 
 }
 
@@ -313,7 +374,47 @@ msg.innerHTML=text
 
 }
 
+function showLayout(layout){
+
+evaText.innerHTML=""
+
+layout.forEach((item,index)=>{
+
+setTimeout(()=>{
+
+const div=
+
+document.createElement("div")
+
+div.className=
+
+"line " + item.class
+
+div.style.left=item.x
+
+div.style.top=item.y
+
+evaText.appendChild(div)
+
+typeLine(
+div,
+item.text,
+42
+)
+
+},index*850)
+
+})
+
+}
+
 start.onclick=()=>{
+
+start.style.display="none"
+
+music.volume=.7
+
+music.play()
 
 const random=
 
@@ -323,18 +424,14 @@ Math.random()
 
 *
 
-messages.length
+layouts.length
 
 )
 
-start.style.display="none"
+showLayout(
 
-music.volume=.7
+layouts[random]
 
-music.play()
-
-typeWriter(
-messages[random]
 )
 
 }
