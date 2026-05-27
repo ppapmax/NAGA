@@ -26,12 +26,12 @@ format("truetype");
 }
 
 *{
+margin:0;
+padding:0;
 box-sizing:border-box;
 }
 
 body{
-
-margin:0;
 
 width:100vw;
 
@@ -40,10 +40,6 @@ height:100vh;
 overflow:hidden;
 
 background:black;
-
-color:white;
-
-font-family:"Cubic";
 
 }
 
@@ -55,9 +51,9 @@ top:0;
 
 left:0;
 
-width:100%;
+width:100vw;
 
-height:100%;
+height:100vh;
 
 object-fit:cover;
 
@@ -73,17 +69,17 @@ inset:0;
 
 background:
 
-rgba(0,0,0,.35);
+rgba(0,0,0,.25);
 
 z-index:-1;
 
 }
 
-.page{
+.container{
 
-width:100vw;
+width:100%;
 
-height:100vh;
+height:100%;
 
 display:flex;
 
@@ -95,9 +91,11 @@ padding:8vw;
 
 }
 
-.box{
+.card{
 
-width:88vw;
+width:100%;
+
+max-width:700px;
 
 min-height:45vh;
 
@@ -109,19 +107,9 @@ align-items:center;
 
 flex-direction:column;
 
-padding:40px;
-
 text-align:center;
 
-background:
-
-rgba(0,0,0,.18);
-
-backdrop-filter:
-
-blur(10px);
-
-border-radius:28px;
+padding:40px;
 
 }
 
@@ -129,21 +117,21 @@ button{
 
 padding:
 
-14px 36px;
-
-font-size:22px;
+16px 40px;
 
 border-radius:999px;
-
-background:
-
-rgba(255,255,255,.08);
 
 border:
 
 1px solid white;
 
+background:
+
+rgba(255,255,255,.08);
+
 color:white;
+
+font-size:20px;
 
 font-family:"Cubic";
 
@@ -155,17 +143,21 @@ letter-spacing:4px;
 
 display:none;
 
+font-family:"Cubic";
+
+color:white;
+
 font-size:
 
 clamp(
-30px,
-7vw,
-54px
+34px,
+8vw,
+60px
 );
 
 line-height:1.8;
 
-letter-spacing:5px;
+letter-spacing:4px;
 
 animation:
 
@@ -175,7 +167,7 @@ fade 2.5s ease;
 
 @keyframes fade{
 
-from{
+0%{
 
 opacity:0;
 
@@ -189,7 +181,7 @@ blur(10px);
 
 }
 
-to{
+100%{
 
 opacity:1;
 
@@ -226,9 +218,9 @@ type="video/mp4">
 
 <div class="overlay"></div>
 
-<div class="page">
+<div class="container">
 
-<div class="box">
+<div class="card">
 
 <button
 id="start">
@@ -280,28 +272,24 @@ const messages=[
 ]
 
 const start=
-
 document
 .getElementById(
 "start"
 )
 
 const msg=
-
 document
 .getElementById(
 "msg"
 )
 
 const music=
-
 document
 .getElementById(
 "music"
 )
 
-start
-.onclick=()=>{
+start.onclick=()=>{
 
 const random=
 
@@ -317,9 +305,7 @@ messages.length
 
 msg.innerText=
 
-messages[
-random
-]
+messages[random]
 
 start.style.display=
 
@@ -329,9 +315,7 @@ msg.style.display=
 
 "block"
 
-music.volume=
-
-0.7
+music.volume=.7
 
 music.play()
 
