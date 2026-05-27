@@ -1,127 +1,183 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NAGA</title>
 
 <style>
+*{
+box-sizing:border-box;
+}
 
 body{
 margin:0;
+width:100vw;
+height:100vh;
+overflow:hidden;
+font-family:"Noto Serif TC","Microsoft JhengHei",serif;
+background:black;
+color:white;
+}
+
+#bgVideo{
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+object-fit:cover;
+z-index:-2;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.35);
+z-index:-1;
+}
+
+.page{
+width:100vw;
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-
-background:url("bg.png");
-background-size:cover;
-background-position:center;
-
-color:white;
-font-size:38px;
-text-align:center;
-
+padding:6vw;
 }
 
 .box{
-padding:30px;
-background:rgba(0,0,0,.45);
-border-radius:20px;
-max-width:800px;
+width:80vw;
+max-width:1200px;
+min-height:45vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:70px;
+border-radius:30px;
+background:linear-gradient(
+90deg,
+rgba(0,0,0,.55),
+rgba(0,0,0,.18)
+);
+backdrop-filter:blur(4px);
 }
 
 button{
+padding:18px 56px;
+border:1px solid rgba(255,255,255,.8);
+border-radius:999px;
+background:rgba(0,0,0,.2);
+color:white;
+font-size:28px;
+letter-spacing:8px;
+cursor:pointer;
+}
 
-padding:15px 35px;
-font-size:20px;
-
+#msg{
+font-size:clamp(38px,4vw,72px);
+line-height:1.7;
+letter-spacing:6px;
+font-weight:400;
+opacity:0;
+animation:fadeIn 3s ease forwards;
 }
 
 .hidden{
 display:none;
 }
 
-</style>
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(24px);
+filter:blur(8px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+filter:blur(0);
+}
+}
 
+@media (orientation:portrait){
+.page{
+transform:rotate(90deg);
+width:100vh;
+height:100vw;
+position:absolute;
+top:50%;
+left:50%;
+translate:-50% -50%;
+}
+
+.box{
+width:82vh;
+min-height:45vw;
+}
+
+#msg{
+font-size:clamp(34px,6vh,64px);
+}
+
+button{
+font-size:24px;
+}
+}
+</style>
 </head>
 
 <body>
 
+<video id="bgVideo" autoplay muted loop playsinline>
+<source src="bg.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<div class="page">
 <div class="box">
 
-<button id="start">
-開始
-</button>
+<button id="startBtn">開始</button>
 
-<div id="content" class="hidden">
+<h1 id="msg" class="hidden"></h1>
 
-<h1 id="msg"></h1>
+</div>
+</div>
 
 <audio id="music" src="music.mp3" loop></audio>
 
-</div>
-
-</div>
-
 <script>
-
 const messages=[
+"第一句話放這裡。",
+"第二句話放這裡。",
+"第三句話放這裡。",
+"第四句話放這裡。",
+"第五句話放這裡。",
+"第六句話放這裡。",
+"第七句話放這裡。",
+"第八句話放這裡。",
+"第九句話放這裡。",
+"第十句話放這裡。"
+];
 
-"第一句",
+const startBtn=document.getElementById("startBtn");
+const msg=document.getElementById("msg");
+const music=document.getElementById("music");
 
-"第二句",
+startBtn.onclick=()=>{
+const randomIndex=Math.floor(Math.random()*messages.length);
 
-"第三句",
+msg.innerText=messages[randomIndex];
 
-"第四句",
+startBtn.classList.add("hidden");
+msg.classList.remove("hidden");
 
-"第五句",
-
-"第六句",
-
-"第七句",
-
-"第八句",
-
-"第九句",
-
-"第十句"
-
-]
-
-document
-.getElementById("start")
-.onclick=()=>{
-
-document
-.getElementById("start")
-.style.display="none"
-
-document
-.getElementById("content")
-.classList
-.remove("hidden")
-
-document
-.getElementById("msg")
-.innerText=
-
-messages[
-Math.floor(
-Math.random()*10
-)
-]
-
-document
-.getElementById("music")
-.play()
-
-}
-
+music.volume=0.7;
+music.play();
+};
 </script>
 
 </body>
-
 </html>
