@@ -1,443 +1,175 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width,initial-scale=1">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NAGA</title>
 
 <style>
-
 @font-face{
-
-font-family:"NAGAfont";
-
-src:
-
-url("NotoSerifTC-SemiBold.ttf")
-
-format("truetype");
-
+  font-family:"NAGAfont";
+  src:url("NotoSerifTC-SemiBold.ttf") format("truetype");
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-
-width:100vw;
-
-height:100vh;
-
-overflow:hidden;
-
-background:black;
-
-font-family:"NAGAfont",serif;
-
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:black;
+  font-family:"NAGAfont",serif;
 }
 
 #bgVideo{
-
-position:fixed;
-
-inset:0;
-
-width:100vw;
-
-height:100vh;
-
-object-fit:cover;
-
-z-index:-2;
-
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
+  z-index:-2;
 }
 
 .overlay{
-
-position:fixed;
-
-inset:0;
-
-background:
-
-rgba(0,0,0,.38);
-
-z-index:-1;
-
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.38);
+  z-index:-1;
 }
 
 #start{
-
-position:fixed;
-
-left:50%;
-
-top:50%;
-
-transform:
-
-translate(-50%,-50%);
-
-padding:
-
-14px 44px;
-
-border:
-
-1px solid white;
-
-border-radius:999px;
-
-background:
-
-rgba(0,0,0,.18);
-
-backdrop-filter:
-
-blur(6px);
-
-color:white;
-
-font-size:24px;
-
-font-family:"NAGAfont";
-
-letter-spacing:8px;
-
-z-index:10;
-
+  position:fixed;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  padding:14px 46px;
+  border:1px solid white;
+  border-radius:999px;
+  background:rgba(0,0,0,.25);
+  color:white;
+  font-size:24px;
+  font-family:"NAGAfont";
+  letter-spacing:8px;
+  z-index:10;
 }
 
 #evaText{
-
-position:fixed;
-
-inset:0;
-
-width:100vw;
-
-height:100vh;
-
-overflow:hidden;
-
-pointer-events:none;
-
-color:white;
-
+  position:fixed;
+  inset:0;
+  padding:12vh 7vw 16vh;
+  color:white;
+  overflow:hidden;
+  pointer-events:none;
 }
 
 .line{
-
-position:absolute;
-
-white-space:nowrap;
-
-opacity:1;
-
-text-shadow:
-
-0 0 10px rgba(0,0,0,.9);
-
+  position:relative;
+  width:100%;
+  white-space:normal;
+  word-break:keep-all;
+  overflow-wrap:break-word;
+  text-shadow:0 0 12px rgba(0,0,0,.95);
 }
 
-.big{
-
-font-size:
-
-clamp(
-52px,
-14vw,
-110px
-);
-
-font-weight:900;
-
-line-height:.95;
-
-letter-spacing:-5px;
-
+.top{
+  font-size:clamp(22px,6vw,42px);
+  line-height:1.25;
+  margin-bottom:5vh;
 }
 
-.mid{
-
-font-size:
-
-clamp(
-28px,
-7vw,
-60px
-);
-
-font-weight:900;
-
-line-height:1.05;
-
-letter-spacing:-2px;
-
+.main{
+  font-size:clamp(42px,12vw,82px);
+  line-height:1.08;
+  letter-spacing:-4px;
+  margin-bottom:5vh;
 }
 
-.small{
-
-font-size:
-
-clamp(
-14px,
-3.5vw,
-24px
-);
-
-font-weight:700;
-
-line-height:1.2;
-
-letter-spacing:-1px;
-
+.sub{
+  font-size:clamp(22px,6vw,42px);
+  line-height:1.35;
 }
 
 .cursor{
-
-display:inline-block;
-
-animation:
-
-blink .8s infinite;
-
+  animation:blink .8s infinite;
 }
 
 @keyframes blink{
-
-0%{
-opacity:1;
+  0%{opacity:1;}
+  50%{opacity:0;}
+  100%{opacity:1;}
 }
-
-50%{
-opacity:0;
-}
-
-100%{
-opacity:1;
-}
-
-}
-
 </style>
-
 </head>
 
 <body>
 
-<video
-id="bgVideo"
-autoplay
-muted
-loop
-playsinline>
-
-<source
-src="bg.mp4"
-type="video/mp4">
-
+<video id="bgVideo" autoplay muted loop playsinline>
+  <source src="bg.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<button id="start">
-
-NAGA
-
-</button>
+<button id="start">NAGA</button>
 
 <div id="evaText"></div>
 
-<audio
-id="music"
-src="music.mp3"
-loop>
-
-</audio>
+<audio id="music" src="music.mp3" loop></audio>
 
 <script>
-
 const layouts=[
+  ["2026年的人類將記憶壓縮進銀色光碟之中","以為這樣就能對抗遺忘","卻忘了自己早已失去記憶的能力"],
+  ["光碟反射著文明的光","人們凝視著那些旋轉的圓盤","像凝視著屬於未來的新神"],
+  ["Naga盤旋於時間之上","而人類則將靈魂燒錄進一片片塑膠之中","試圖留下存在過的證明"],
+  ["那是一個將情感轉換成檔案格式的年代","愛、痛苦與記憶","全都能被複製與刪除"],
+  ["2026年的人們相信","只要資料還能讀取","就代表文明從未真正死亡"],
+  ["他們將未來刻錄進光碟表面","卻沒發現那些刮痕","早已像預言般記錄著文明的崩壞"],
+  ["光碟不斷旋轉","如同Naga象徵的輪迴","而人類也在科技之中反覆重演相同的慾望"],
+  ["人們曾經害怕光碟損壞、資料消失","後來才明白","最先損壞的是人類自身的感知"],
+  ["2783年的我們考古2026年的遺物時發現","他們留下最多的不是思想","而是無數無法讀取的檔案"],
+  ["當最後一片光碟停止轉動後","人類終於聽見了","那些被科技噪音掩蓋已久的自己"]
+];
 
-[
-{text:"2026年的人類將記憶壓縮進銀色光碟之中",x:"6%",y:"18%",class:"mid"},
-{text:"以為這樣就能對抗遺忘",x:"7%",y:"38%",class:"big"},
-{text:"卻忘了自己早已失去記憶的能力",x:"8%",y:"60%",class:"small"},
-{text:"ARCHIVE 2026",x:"7%",y:"8%",class:"small"}
-],
+const start=document.getElementById("start");
+const evaText=document.getElementById("evaText");
+const music=document.getElementById("music");
 
-[
-{text:"光碟反射著文明的光",x:"7%",y:"20%",class:"big"},
-{text:"人們凝視著那些旋轉的圓盤",x:"7%",y:"42%",class:"mid"},
-{text:"像凝視著屬於未來的新神",x:"8%",y:"64%",class:"small"},
-{text:"NAGA SIGNAL",x:"7%",y:"8%",class:"small"}
-],
-
-[
-{text:"Naga盤旋於時間之上",x:"7%",y:"18%",class:"big"},
-{text:"而人類則將靈魂燒錄進一片片塑膠之中",x:"7%",y:"42%",class:"small"},
-{text:"試圖留下存在過的證明",x:"8%",y:"64%",class:"mid"}
-],
-
-[
-{text:"那是一個將情感轉換成檔案格式的年代",x:"7%",y:"20%",class:"small"},
-{text:"愛、痛苦與記憶",x:"8%",y:"42%",class:"big"},
-{text:"全都能被複製與刪除",x:"8%",y:"64%",class:"mid"}
-],
-
-[
-{text:"2026年的人們相信",x:"7%",y:"20%",class:"big"},
-{text:"只要資料還能讀取",x:"8%",y:"42%",class:"mid"},
-{text:"就代表文明從未真正死亡",x:"8%",y:"64%",class:"small"}
-],
-
-[
-{text:"他們將未來刻錄進光碟表面",x:"7%",y:"20%",class:"mid"},
-{text:"卻沒發現那些刮痕",x:"8%",y:"42%",class:"big"},
-{text:"早已像預言般記錄著文明的崩壞",x:"8%",y:"64%",class:"small"}
-],
-
-[
-{text:"光碟不斷旋轉",x:"7%",y:"20%",class:"big"},
-{text:"如同Naga象徵的輪迴",x:"8%",y:"42%",class:"mid"},
-{text:"而人類也在科技之中反覆重演相同的慾望",x:"8%",y:"64%",class:"small"}
-],
-
-[
-{text:"人們曾經害怕光碟損壞",x:"7%",y:"18%",class:"big"},
-{text:"資料消失",x:"8%",y:"42%",class:"big"},
-{text:"後來才明白，最先損壞的是人類自身的感知",x:"8%",y:"66%",class:"small"}
-],
-
-[
-{text:"2783年的我們考古2026年的遺物時發現",x:"7%",y:"20%",class:"small"},
-{text:"他們留下最多的不是思想",x:"8%",y:"42%",class:"mid"},
-{text:"而是無數無法讀取的檔案",x:"8%",y:"64%",class:"big"}
-],
-
-[
-{text:"當最後一片光碟停止轉動後",x:"7%",y:"20%",class:"mid"},
-{text:"人類終於聽見了",x:"8%",y:"42%",class:"big"},
-{text:"那些被科技噪音掩蓋已久的自己",x:"8%",y:"64%",class:"small"}
-]
-
-]
-
-const start=
-document.getElementById("start")
-
-const evaText=
-document.getElementById("evaText")
-
-const music=
-document.getElementById("music")
-
-function typeLine(element,text,speed=55){
-
-let i=0
-
-element.innerHTML=""
-
-const timer=
-
-setInterval(()=>{
-
-element.innerHTML=
-
-text.substring(0,i)
-
-+
-
-'<span class="cursor">|</span>'
-
-i++
-
-if(i>text.length){
-
-clearInterval(timer)
-
-element.innerHTML=text
-
+function typeLine(el,text,speed=45){
+  let i=0;
+  el.innerHTML="";
+  const timer=setInterval(()=>{
+    el.innerHTML=text.substring(0,i)+'<span class="cursor">|</span>';
+    i++;
+    if(i>text.length){
+      clearInterval(timer);
+      el.innerHTML=text;
+    }
+  },speed);
 }
 
-},speed)
+function showLayout(lines){
+  evaText.innerHTML="";
 
-}
+  const classes=["top","main","sub"];
 
-function showLayout(layout){
-
-evaText.innerHTML=""
-
-layout.forEach((item,index)=>{
-
-setTimeout(()=>{
-
-const div=
-
-document.createElement("div")
-
-div.className=
-
-"line " + item.class
-
-div.style.left=item.x
-
-div.style.top=item.y
-
-evaText.appendChild(div)
-
-typeLine(
-div,
-item.text,
-42
-)
-
-},index*850)
-
-})
-
+  lines.forEach((text,index)=>{
+    setTimeout(()=>{
+      const div=document.createElement("div");
+      div.className="line "+classes[index];
+      evaText.appendChild(div);
+      typeLine(div,text,42);
+    },index*1300);
+  });
 }
 
 start.onclick=()=>{
+  start.style.display="none";
+  music.volume=.7;
+  music.play();
 
-start.style.display="none"
-
-music.volume=.7
-
-music.play()
-
-const random=
-
-Math.floor(
-
-Math.random()
-
-*
-
-layouts.length
-
-)
-
-showLayout(
-
-layouts[random]
-
-)
-
-}
-
+  const random=Math.floor(Math.random()*layouts.length);
+  showLayout(layouts[random]);
+};
 </script>
 
 </body>
-
 </html>
