@@ -43,10 +43,17 @@ font-family:"NAGAfont",serif;
 
 position:fixed;
 inset:0;
+
 width:100vw;
 height:100vh;
+
 object-fit:cover;
+
 z-index:-2;
+
+filter:
+brightness(.72)
+contrast(1.05);
 
 }
 
@@ -54,7 +61,10 @@ z-index:-2;
 
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.42);
+
+background:
+rgba(0,0,0,.46);
+
 z-index:-1;
 
 }
@@ -70,17 +80,20 @@ transform:
 translate(-50%,-50%);
 
 padding:
-14px 46px;
+14px 48px;
 
 border:
-1px solid rgba(255,255,255,.9);
+1px solid rgba(255,255,255,.85);
 
 border-radius:999px;
 
 background:
-rgba(0,0,0,.22);
+rgba(255,255,255,.05);
 
-color:white;
+backdrop-filter:
+blur(10px);
+
+color:#ffffff;
 
 font-size:24px;
 
@@ -88,8 +101,8 @@ font-family:"NAGAfont";
 
 letter-spacing:8px;
 
-backdrop-filter:
-blur(8px);
+box-shadow:
+0 0 20px rgba(255,255,255,.08);
 
 z-index:10;
 
@@ -107,9 +120,11 @@ justify-content:center;
 
 align-items:center;
 
+padding:8vw;
+
 pointer-events:none;
 
-padding:8vw;
+overflow:hidden;
 
 }
 
@@ -121,7 +136,7 @@ align-items:center;
 
 gap:6vw;
 
-max-width:90vw;
+max-width:92vw;
 
 }
 
@@ -134,21 +149,25 @@ text-orientation:mixed;
 font-size:
 
 clamp(
-24px,
-7vw,
-52px
+22px,
+6.5vw,
+48px
 );
 
 font-weight:700;
 
-line-height:1.1;
+line-height:1.08;
 
 letter-spacing:-2px;
 
-text-shadow:
-0 0 10px rgba(0,0,0,.95);
+color:#ffffff;
 
 white-space:nowrap;
+
+text-shadow:
+0 0 8px rgba(255,255,255,.18),
+0 0 18px rgba(255,255,255,.08),
+0 0 16px rgba(0,0,0,.95);
 
 }
 
@@ -159,10 +178,10 @@ width:1px;
 height:52vh;
 
 background:
-rgba(255,255,255,.7);
+rgba(255,255,255,.78);
 
 box-shadow:
-0 0 10px rgba(255,255,255,.25);
+0 0 14px rgba(255,255,255,.18);
 
 }
 
@@ -176,7 +195,7 @@ justify-content:center;
 
 gap:4vh;
 
-max-width:54vw;
+max-width:56vw;
 
 }
 
@@ -185,21 +204,25 @@ max-width:54vw;
 font-size:
 
 clamp(
-48px,
-13vw,
-96px
+46px,
+12vw,
+92px
 );
 
 font-weight:900;
 
 line-height:.95;
 
-letter-spacing:-6px;
-
-text-shadow:
-0 0 12px rgba(0,0,0,.95);
+letter-spacing:-5px;
 
 word-break:break-all;
+
+color:#ffffff;
+
+text-shadow:
+0 0 8px rgba(255,255,255,.22),
+0 0 20px rgba(255,255,255,.10),
+0 0 16px rgba(0,0,0,.95);
 
 }
 
@@ -210,7 +233,7 @@ font-size:
 clamp(
 18px,
 5vw,
-38px
+36px
 );
 
 font-weight:700;
@@ -219,16 +242,22 @@ line-height:1.35;
 
 letter-spacing:-1px;
 
-text-shadow:
-0 0 10px rgba(0,0,0,.95);
-
 word-break:break-all;
+
+color:#ffffff;
+
+text-shadow:
+0 0 6px rgba(255,255,255,.18),
+0 0 16px rgba(255,255,255,.08),
+0 0 14px rgba(0,0,0,.95);
 
 }
 
 .cursor{
 
 display:inline-block;
+
+color:#ffffff;
 
 animation:
 blink .8s infinite;
@@ -441,19 +470,19 @@ right.appendChild(small)
 
 evaText.appendChild(wrap)
 
-typeLine(left,data[0],36)
+typeLine(left,data[0],34)
 
 setTimeout(()=>{
 
 typeLine(big,data[1],42)
 
-},1800)
+},2200)
 
 setTimeout(()=>{
 
 typeLine(small,data[2],34)
 
-},3800)
+},4300)
 
 }
 
@@ -478,9 +507,7 @@ layouts.length
 )
 
 showLayout(
-
 layouts[random]
-
 )
 
 }
